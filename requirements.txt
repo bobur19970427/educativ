@@ -1,0 +1,12 @@
+asgiref==3.5.1
+backports.zoneinfo==0.2.1
+Django==3.2.12
+django-timedeltafield==0.7.10
+djangorestframework==3.13.1
+djangorestframework-jwt==1.11.0
+Pillow==9.1.0
+PyJWT==1.7.1
+pytz==2022.1
+six==1.16.0
+sqlparse==0.4.2
+transliterate==1.10.2
