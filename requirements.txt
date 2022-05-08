@@ -1,6 +1,7 @@
 asgiref==3.5.1
 backports.zoneinfo==0.2.1
 Django==3.2.12
+django-filter==21.1
 django-timedeltafield==0.7.10
 djangorestframework==3.13.1
 djangorestframework-jwt==1.11.0

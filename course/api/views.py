@@ -1,6 +1,7 @@
 import datetime
 
-from rest_framework import status, mixins
+from django.db.models import Q
+from rest_framework import status, mixins, filters
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import ListAPIView, get_object_or_404, CreateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
@@ -19,9 +20,13 @@ from course.permissions import IsAuthenticatedOrReadOnly, IsTeacherCreate, IsCou
 class CategoryListApiView(ListAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all().filter(status=True)
-
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'slug']
     def get(self, request):
+        search = request.query_params.get('search', None)
         category = Category.objects.all().filter(status=True)
+        if search:
+            category = category.filter(Q(name__icontains=search) | Q(slug__icontains=search))
         serializer = CategorySerializer(category, many=True, context={'request': request})
         return Response(serializer.data)
 
@@ -119,9 +124,13 @@ class CategoryApiView(APIView):
 class CourseListApiView(ListAPIView):
     serializer_class = CourseListSerializer
     queryset = Course.objects.all().filter(status=True)
-
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'slug']
     def get(self, request):
+        search = request.query_params.get('search', None)
         course = Course.objects.all().filter(status=True)
+        if search:
+            course = course.filter(Q(name__icontains=search) | Q(slug__icontains=search))
         serializer = CourseListSerializer(course, many=True, context={'request': request})
         return Response(serializer.data)
 
