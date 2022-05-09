@@ -207,17 +207,8 @@ def register(request):
 class UserProfileEditView(APIView):
     permission_classes = [IsAuthenticated, ]
 
-    def get_object(self, value_from_url):
-        user = get_object_or_404(User, pk=value_from_url)
-        return user
-
-    def get(self, request, value_from_url):
-        user = self.get_object(value_from_url)
-        serializer = UserEditSerializer(user, many=False)
-        return Response(serializer.data)
-
-    def put(self, request, value_from_url):
-        user = self.get_object(value_from_url)
+    def put(self, request):
+        user = request.user
         serializer = UserEditSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
