@@ -13,8 +13,7 @@ import os
 from datetime import timedelta
 
 from pathlib import Path
-import django_heroku
-django_heroku.settings(locals())
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -151,7 +150,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20
 
 }
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 AUTH_USER_MODEL = "accounts.User"
 JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
@@ -189,3 +188,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+import django_heroku
+django_heroku.settings(locals())
